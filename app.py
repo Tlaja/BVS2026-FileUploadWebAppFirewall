@@ -1,14 +1,15 @@
 import os
 from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
+import filetype
 
 app = Flask(__name__)
 
-# Configuration
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg"}
+ALLOWED_MIME_TYPES = {"image/png", "image/jpeg"}
 
-# Ensure the upload directory exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
@@ -18,17 +19,20 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file_to_upload' not in request.files:
-        return "No file part in the request", 400
+        return "No file part in the request"
     
     file = request.files['file_to_upload']
 
     if file.filename == '':
-        return "No selected file", 400
+        return "No selected file"
 
     if file:
-        # Sanitize the filename
         filename = secure_filename(file.filename)
-        # Save the file to our folder
+        name, ext = os.path.splitext(file.filename)
+        if not ext and (ext.lower() not in ALLOWED_EXTENSIONS):
+        	return f"File '{filename}' doesnt have an allowed extension"
+        if file.content_type not in ALLOWED_MIME_TYPES:
+        	return f"File '{filename}' doesnt have an allowed type"       
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return f"File '{filename}' uploaded successfully!"
 
