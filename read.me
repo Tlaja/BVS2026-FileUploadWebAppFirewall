@@ -1,1 +1,20 @@
 BVS PROJEKAT WEBAPPFIREWALL ZA FILE UPLOAD
+
+FUNKCIONALNOST APLIKACIJE:
+	-Provere ekstenzije(UROS)
+	-Negiranje file traversala(UROS)
+	-Provere content-typea(UROS)
+	-Provere headera(STRAHINJA)
+	-Zabrana prevelikih fajlova(STRAHINJA)
+	-Time delay izmedju uploadova(STRAHINJA)
+	
+POKRETANJE APLIKACIJE:
+	U main folderu gde se nalazi 'app.py' se nalazi i virtual enviroment folder 'venv'
+	U njemu treba da se instaliraju sledece biblioteke pre pokretanja: os, time, flask, werkzeug.utils, filetype
+	Web app se pokrece onda ulazom u virtualni enviroment i pokretanjom komande 'python3 app.py'
+	
+FUNKCIONALNOST APLIKACIJE I NJENA KONFIGURACIJA:
+	Funkcionalnost WAF-a se iskljucivo konfigurise menjanjem lista ALLOWED_EXTENSIONS, ALLOWED_MIME_TYPES, MAX_FILE_SIZE_MB i UPLOAD_COOLDOWN_SECONDS u 'app.py' file-u
+	Dodavanjem ekstenzija/tipova u liste ALLOWED_EXTENSIONS i ALLOWED_MIME_TYPES se dodaje vrsta fajlova koje cemo dodatno da propustamo
+	Povecavanjem MAX_FILE_SIZE_MB povecavamo dozvoljenu velicinu fajla za upload
+	Povecavanje UPLOAD_COOLDOWN_SECONDS se povecava i interval vremena izmedju dozvoljenih pokusaja uploadova od jednog korisnika
