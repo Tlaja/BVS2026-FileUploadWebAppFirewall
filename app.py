@@ -50,7 +50,7 @@ def upload_file():
         
         # extension provera
         name, ext = os.path.splitext(file.filename)
-        if not ext and (ext.lower() not in ALLOWED_EXTENSIONS):
+        if (ext.lower() not in ALLOWED_EXTENSIONS) and ext:
         	return f"File '{filename}' doesnt have an allowed extension"
         	
         # content-type provera
